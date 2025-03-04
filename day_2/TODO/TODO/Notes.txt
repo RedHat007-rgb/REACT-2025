@@ -1,0 +1,12 @@
+
+✅ Interactive Todo List – Project Checklist (Using Vite)
+🔲 Set up your project using Vite (npm create vite@latest todo-app --template react)
+🔲 Create a TodoList component
+🔲 Use useState to store an array of todos (const [todos, setTodos] = useState([]))
+🔲 Create an input field & button to add new tasks🔲 Handle onChange event to update input value in state
+🔲 Handle onClick event to add a new task to the list🔲 Render tasks dynamically using .map()
+🔲 Pass tasks as props to a TodoItem child component🔲 Add a "Delete" button next to each task
+🔲 Use an onClick event to remove a task from the list
+🔲 Create an "Edit" button to modify an existing task
+🔲 Handle form submission (onSubmit) to prevent default behavior
+🔲 Use event delegation if needed for better performance
