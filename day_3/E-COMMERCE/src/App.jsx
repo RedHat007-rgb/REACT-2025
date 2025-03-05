@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 function Product() {
+  const [cart, setCart] = useState([]);
+  const [price, SetTotalPrice] = useState(0);
   const [stock, setStock] = useState([
     {
       id: 1,
@@ -48,6 +50,8 @@ function Product() {
     setStock(
       stock.map((data) => {
         if (data.id === id && data.stock > 0) {
+          setCart([...cart, data]);
+          SetTotalPrice((prev) => prev + data.price);
           return { ...data, stock: data.stock - 1 };
         }
         return data;
@@ -55,10 +59,35 @@ function Product() {
     );
   }
 
+  function handleRemoveFromCart(id) {
+    setCart(cart.filter((item) => item.id !== id));
+  }
+
   return (
     <div style={styles.container}>
       <h2 style={styles.title}>E-COMMERCE PLATFORM</h2>
       <ProductCard productData={stock} handleStock={handleStock} />
+      <Cart cart={cart} handleRemoveFromCart={handleRemoveFromCart} price={price} />
+    </div>
+  );
+}
+
+function Cart({ handleRemoveFromCart, cart, price }) {
+  return (
+    <div style={styles.cartContainer}>
+      <h3>CART</h3>
+      {cart.map((data) => (
+        <div key={data.id} style={styles.cartItem}>
+          <img src={data.image} alt={data.name} style={styles.image} />
+          <h3 style={styles.productName}>{data.name}</h3>
+          <p style={styles.price}>${data.price.toFixed(2)}</p>
+          <p style={styles.description}>{data.description}</p>
+          <button style={styles.removeButton} onClick={() => handleRemoveFromCart(data.id)}>
+            Remove
+          </button>
+        </div>
+      ))}
+      <h3 style={styles.totalPrice}>Total price: ${price.toFixed(2)}</h3>
     </div>
   );
 }
@@ -88,33 +117,40 @@ function ProductCard({ productData, handleStock }) {
   );
 }
 
+function App() {
+  return <Product />;
+}
+
+export default App;
+
 const styles = {
   container: {
     textAlign: "center",
     fontFamily: "Arial, sans-serif",
     padding: "20px",
   },
-  title: {
-    fontSize: "24px",
-    fontWeight: "bold",
-    marginBottom: "20px",
-  },
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
     gap: "20px",
-    justifyContent: "center",
+    padding: "20px",
   },
   card: {
-    backgroundColor: "#fff",
-    padding: "15px",
+    width: "250px",
+    border: "1px solid #ddd",
     borderRadius: "10px",
-    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+    padding: "15px",
     textAlign: "center",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#fff",
+    transition: "transform 0.2s ease-in-out",
+  },
+  cardHover: {
+    transform: "scale(1.05)",
   },
   image: {
     width: "100%",
-    height: "150px",
+    height: "180px",
     objectFit: "cover",
     borderRadius: "8px",
   },
@@ -125,8 +161,8 @@ const styles = {
   },
   price: {
     fontSize: "16px",
-    fontWeight: "bold",
     color: "#007BFF",
+    fontWeight: "bold",
   },
   description: {
     fontSize: "14px",
@@ -135,7 +171,7 @@ const styles = {
   },
   stock: {
     fontSize: "14px",
-    color: "#28a745",
+    color: "green",
     fontWeight: "bold",
   },
   outOfStock: {
@@ -144,18 +180,50 @@ const styles = {
     fontWeight: "bold",
   },
   button: {
-    padding: "10px 15px",
     backgroundColor: "#007BFF",
+    color: "#fff",
+    border: "none",
+    padding: "10px 15px",
+    cursor: "pointer",
+    borderRadius: "5px",
+    fontSize: "14px",
+    marginTop: "10px",
+    transition: "background-color 0.3s ease",
+  },
+  buttonHover: {
+    backgroundColor: "#0056b3",
+  },
+  cartContainer: {
+    marginTop: "20px",
+    padding: "20px",
+    border: "1px solid #ddd",
+    borderRadius: "10px",
+    backgroundColor: "#f8f9fa",
+    textAlign: "center",
+  },
+  cartItem: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "10px",
+    borderBottom: "1px solid #ddd",
+  },
+  removeButton: {
+    backgroundColor: "red",
     color: "white",
     border: "none",
-    borderRadius: "5px",
+    padding: "8px 12px",
     cursor: "pointer",
-    transition: "background 0.3s",
+    borderRadius: "5px",
+    fontSize: "14px",
+    transition: "background-color 0.3s ease",
+  },
+  removeButtonHover: {
+    backgroundColor: "#b30000",
+  },
+  totalPrice: {
+    fontSize: "18px",
+    fontWeight: "bold",
+    marginTop: "10px",
   },
 };
-
-function App() {
-  return <Product />;
-}
-
-export default App;
