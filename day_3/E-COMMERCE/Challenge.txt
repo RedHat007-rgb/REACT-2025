@@ -1,0 +1,13 @@
+ E-commerce Product Page (Show "Add to Cart" or "Out of Stock")
+🔹 Concepts Covered: JSX, Components, Props, useState, Events, Conditional Rendering
+
+📝 Checklist:
+🔲 Create a Product.js component
+🔲 Use useState to track product stock (const [stock, setStock] = useState(5))
+🔲 Display product details dynamically using props
+🔲 Show "In Stock" or "Out of Stock" using conditional rendering
+🔲 Create an "Add to Cart" button
+🔲 Handle onClick event to reduce stock when clicked
+🔲 Disable the button when stock reaches 0
+🔲 Pass product data as props to a ProductCard child component
+🔲 Use map() to render a list of products dynamically
