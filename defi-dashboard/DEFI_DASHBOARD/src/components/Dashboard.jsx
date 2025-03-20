@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CryptoCard from "./CryptoCard";
+import CardComponent from "./CardContainer";
 
 const DashBoard = () => {
     const [loading, setLoading] = useState(true);
@@ -81,17 +82,22 @@ const DashBoard = () => {
             ) : error ? (
                 <div style={errorStyle}>{error}</div>
             ) : (
-                <div style={listContainerStyle}>
+                    <div style={listContainerStyle}>
                     {view === "List View"
-                        ? top10.map((item) => (
-                              <CryptoCard
-                                  key={item.id}
-                                  name={item.name}
-                                  price={item.current_price}
-                                  change={item.price_change_percentage_24h}
-                              />
-                          ))
-                        : JSON.stringify(top10)}
+                        ? (<CardComponent>
+                            {top10.map((item) => (
+                                <CryptoCard
+                                    key={item.id}
+                                    name={item.name}
+                                    price={item.current_price}
+                                    change={item.price_change_percentage_24h}
+                                />
+                            ))}
+                        </CardComponent>)
+                        : (<div>
+                            {JSON.stringify(top10)}
+                        </div>)
+                    }
                 </div>
             )}
         </div>
