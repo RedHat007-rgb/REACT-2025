@@ -22,18 +22,38 @@ function App() {
     }
   };
 
+  const backgroundStyle = {
+    background: "#E3F2FD", 
+    minHeight: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center", 
+    padding: "20px",
+    boxSizing: "border-box",
+  };
+
+  const contentWrapperStyle = {
+    background: "#FFFFFF",
+    borderRadius: "15px",
+    padding: "20px",
+    boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+    width: "100%",
+    maxWidth: "500px", 
+  };
+
   return (
-    <>
+    <div style={backgroundStyle}>
       <Header />
-      <div style={{ marginTop:"100px",display: "flex", justifyContent: "center" }}>
+      <div style={contentWrapperStyle}>
         {display ? (
-          <Display response={object} />
+          <Display handleBackClick={() => setDisplay(false)} response={object} />
         ) : (
           <Search oncitysubmit={(city) => apicall(city)} />
         )}
       </div>
       <Footer />
-    </>
+    </div>
   );
 }
 

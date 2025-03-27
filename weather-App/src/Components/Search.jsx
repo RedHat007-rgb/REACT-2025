@@ -1,47 +1,64 @@
 import { useState } from "react";
 
 const Search = (props) => {
-    const [city,setCity]=useState("");
+  const [city, setCity] = useState("");
 
+  const containerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "15px",
+  };
+
+  const inputStyle = {
+    width: "100%",
+    maxWidth: "300px",
+    padding: "12px",
+    borderRadius: "8px",
+    border: "1px solid #2196F3",
+    fontSize: "16px",
+    fontFamily: "'Roboto', sans-serif",
+    color: "#333",
+    outline: "none",
+    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.05)",
+  };
+
+  const buttonStyle = {
+    padding: "12px 20px",
+    background: "#2196F3",
+    color: "#FFFFFF",
+    border: "none",
+    borderRadius: "8px",
+    fontSize: "16px",
+    fontFamily: "'Roboto', sans-serif",
+    fontWeight: "500",
+    cursor: "pointer",
+    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+  };
 
   return (
-    <div style={styles.container}>
-      <input onChange={(e)=>{setCity(e.target.value)}} style={styles.input} placeholder="Enter the city" />
-      <button onClick={()=>{props.oncitysubmit(city)}} style={styles.button}>Get Weather</button>
+    <div style={containerStyle}>
+      <input
+        onChange={(e) => {
+          setCity(e.target.value);
+        }}
+        style={inputStyle}
+        placeholder="Enter the city"
+      />
+      <button
+        onClick={() => {
+          if (city.trim() == "") {
+          alert("Please enter a city name.");
+          return;
+        }
+        props.oncitysubmit(city);
+  }}
+  style={buttonStyle}
+>
+  Get Weather
+</button>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    display: "flex",
-    justifyContent: "center", 
-    alignItems: "center", 
-    height: "100vh", 
-    flexDirection: "column", // Stacks input and button vertically
-    gap: "15px", // Adds spacing
-  },
-  input: {
-    width: "250px",
-    padding: "12px",
-    borderRadius: "25px",
-    border: "2px solid #FF8C00", // Orange border
-    fontSize: "16px",
-    outline: "none",
-    textAlign: "center",
-  },
-  button: {
-    width: "150px",
-    padding: "12px",
-    borderRadius: "25px",
-    border: "none",
-    backgroundColor: "#FF8C00", // Vibrant orange button
-    color: "white",
-    fontSize: "16px",
-    fontWeight: "bold",
-    cursor: "pointer",
-    transition: "0.3s",
-  },
 };
 
 export default Search;
