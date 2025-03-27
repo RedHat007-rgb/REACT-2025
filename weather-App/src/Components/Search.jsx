@@ -1,8 +1,13 @@
-const Search = () => {
+import { useState } from "react";
+
+const Search = (props) => {
+    const [city,setCity]=useState("");
+
+
   return (
     <div style={styles.container}>
-      <input style={styles.input} placeholder="Enter the city" />
-      <button style={styles.button}>Get Weather</button>
+      <input onChange={(e)=>{setCity(e.target.value)}} style={styles.input} placeholder="Enter the city" />
+      <button onClick={()=>{props.oncitysubmit(city)}} style={styles.button}>Get Weather</button>
     </div>
   );
 };
@@ -10,9 +15,9 @@ const Search = () => {
 const styles = {
   container: {
     display: "flex",
-    justifyContent: "center", // Centers horizontally
-    alignItems: "center", // Centers vertically
-    height: "100vh", // Full screen height
+    justifyContent: "center", 
+    alignItems: "center", 
+    height: "100vh", 
     flexDirection: "column", // Stacks input and button vertically
     gap: "15px", // Adds spacing
   },
