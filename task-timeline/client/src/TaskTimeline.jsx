@@ -11,6 +11,9 @@ const TaskTimeLine = () => {
   useEffect(() => {
     if (call) {
       addData();
+      setTimeout(() => {
+        setResponse(null);
+      }, 5000);
     }
   }, [call]);
 
