@@ -1,12 +1,19 @@
+import { useState } from "react";
 import "./App.css";
 import TaskItem from "./Components/TaskItem";
+import AddTaskForm from "./Components/AddTaskForm";
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+
+  const updateTasks = (task) => {
+    let newArray = [...tasks, task];
+    setTasks(newArray);
+  };
+
   return (
     <>
-      <TaskItem task="added" status="completed" />
-      <br />
-      <TaskItem task="added" status="not completed" />
+      <AddTaskForm handler={updateTasks} />
     </>
   );
 }

@@ -6,13 +6,13 @@ const TaskItem = (props) => {
         justifyContent: "center",
         padding: 20,
         borderRadius: 20,
-        color: props.status === "completed" ? "green" : "red",
+        color: props.status ? "green" : "red",
         width: 150,
       }}
     >
       <strong>{props.task}</strong>
       <br />
-      <small>Status:{props.status}</small>
+      <small>Status:{props.status ? "COMPLETED" : "NOT COMPLETED"}</small>
     </div>
   );
 };
