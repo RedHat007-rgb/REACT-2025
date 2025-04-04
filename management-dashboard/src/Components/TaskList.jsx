@@ -2,110 +2,105 @@ import { useState } from "react";
 import TaskItem from "./TaskItem";
 
 const TaskList = (props) => {
-  const [state, setState] = useState("");
+  const [state, setState] = useState("all"); // Default to "all" for better UX
 
-  let completed_tasks = props.tasks.filter((item) => item.completed == true);
+  let completed_tasks = props.tasks.filter((item) => item.completed === true);
   let not_completed_tasks = props.tasks.filter(
-    (item) => item.completed == false
+    (item) => item.completed === false
   );
 
+  // Common styles for reusability
+  const buttonStyle = {
+    padding: "10px 20px",
+    margin: "0 5px",
+    border: "none",
+    borderRadius: "5px",
+    backgroundColor: "#007bff",
+    color: "white",
+    cursor: "pointer",
+    fontSize: "16px",
+    transition: "background-color 0.3s ease",
+  };
+
+  const containerStyle = {
+    maxWidth: "600px",
+    margin: "20px auto",
+    padding: "20px",
+    backgroundColor: "#f9f9f9",
+    borderRadius: "8px",
+    boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+  };
+
+  const noTasksStyle = {
+    textAlign: "center",
+    color: "#666",
+    fontFamily: "Arial, sans-serif",
+  };
+
   return (
-    <>
-      {props.tasks.length == 0 ? (
-        <h2>Sorry there are no tasks available</h2>
+    <div style={containerStyle}>
+      {props.tasks.length === 0 ? (
+        <h2 style={noTasksStyle}>Sorry, there are no tasks available</h2>
       ) : (
-        <div>
-          <button onClick={() => setState("all")}></button>
-          <button onClick={() => setState("completed")}></button>
-          <button onClick={() => setState("not completed")}></button>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "10px",
+            marginBottom: "20px",
+          }}
+        >
+          <button
+            style={{
+              ...buttonStyle,
+              backgroundColor: state === "all" ? "#0056b3" : "#007bff",
+            }}
+            onClick={() => setState("all")}
+          >
+            All Tasks
+          </button>
+          <button
+            style={{
+              ...buttonStyle,
+              backgroundColor: state === "completed" ? "#0056b3" : "#007bff",
+            }}
+            onClick={() => setState("completed")}
+          >
+            Completed
+          </button>
+          <button
+            style={{
+              ...buttonStyle,
+              backgroundColor:
+                state === "not completed" ? "#0056b3" : "#007bff",
+            }}
+            onClick={() => setState("not completed")}
+          >
+            Not Completed
+          </button>
         </div>
       )}
-      {state == "all" ? (
+      {state === "all" ? (
         props.tasks.map((item) => (
-          <TaskItem task={item.task} status={item.completed} />
+          <TaskItem key={item.id} task={item.task} status={item.completed} />
         ))
-      ) : state == "completed" ? (
-        completed_tasks.length == 0 ? (
-          <h3>sorry there are no completed tasks</h3>
+      ) : state === "completed" ? (
+        completed_tasks.length === 0 ? (
+          <h3 style={noTasksStyle}>Sorry, there are no completed tasks</h3>
         ) : (
           completed_tasks.map((item) => (
-            <TaskItem task={item.task} status={item.completed} />
+            <TaskItem key={item.id} task={item.task} status={item.completed} />
           ))
         )
-      ) : state == "not completed" ? (
+      ) : state === "not completed" ? (
         not_completed_tasks.map((item) => (
-          <TaskItem task={item.task} status={item.completed} />
+          <TaskItem key={item.id} task={item.task} status={item.completed} />
         ))
       ) : (
         <></>
       )}
-    </>
+    </div>
   );
 };
 
 export default TaskList;
-
-// <>
-//       {props.tasks.length == 0 ? (
-//         <h2>Sorry there are no tasks,please add tasks..</h2>
-//       ) : (
-//         <div>
-//           <button
-//             onClick={() => {
-//               //   setState("all");
-//               buttonHandler("all");
-//             }}
-//           >
-//             Show All TAsks
-//           </button>
-//           <button
-//             onClick={() => {
-//               buttonHandler("completed");
-//             }}
-//           >
-//             Completed Tasks
-//           </button>
-//           <button
-//             onClick={() => {
-//               buttonHandler("not completed");
-//             }}
-//           >
-//             Pending Tasks
-//           </button>
-//         </div>
-//       )}
-//     </>
-
-// const buttonHandler = (state) => {
-//     if (state == "all") {
-//       return (
-//         <>
-//           {props.tasks.map((item) => {
-//             return <TaskItem task={item.task} status={item.completed} />;
-//           })}
-//         </>
-//       );
-//     } else if (state == "completed") {
-//       let completed_tasks = props.tasks.filter(
-//         (item) => item.completed == true
-//       );
-//       return (
-//         <>
-//           {completed_tasks.map((item) => {
-//             return <TaskItem task={item.task} status={item.completed} />;
-//           })}
-//         </>
-//       );
-//     } else if (state == "not completed") {
-//       let not_completed_tasks = props.tasks.filter(
-//         (item) => item.completed == false
-//       );
-//       return (
-//         <>
-//           {not_completed_tasks.map((item) => {
-//             return <TaskItem task={item.task} status={item.completed} />;
-//           })}
-//         </>
-//       );
-//     }
-//   }
